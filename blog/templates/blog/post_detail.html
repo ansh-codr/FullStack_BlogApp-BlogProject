@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }} — MyBlog{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <article class="card shadow border-0 overflow-hidden">
+            <!-- Featured Image -->
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 450px; object-fit: cover;">
+            {% else %}
+                <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 300px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="bi bi-journal-text text-white" style="font-size: 5rem;"></i>
+                </div>
+            {% endif %}
+
+            <div class="card-body p-5">
+                <!-- Post Title -->
+                <h1 class="fw-bold mb-3">{{ post.title }}</h1>
+
+                <!-- Post Meta -->
+                <div class="d-flex align-items-center text-muted mb-4 pb-3 border-bottom">
+                    <span class="me-4">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <strong>{{ post.author.username }}</strong>
+                    </span>
+                    <span>
+                        <i class="bi bi-calendar3 me-1"></i>
+                        {{ post.created_at|date:"F d, Y" }}
+                    </span>
+                </div>
+
+                <!-- Post Content -->
+                <div class="post-content lh-lg fs-5">
+                    {{ post.content|linebreaks }}
+                </div>
+            </div>
+        </article>
+
+        <!-- Back Button -->
+        <div class="mt-4 mb-5">
+            <a href="{% url 'home' %}" class="btn btn-outline-primary px-4">
+                <i class="bi bi-arrow-left me-1"></i>Back to Home
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

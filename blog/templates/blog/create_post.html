@@ -1,0 +1,51 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Create Post — MyBlog{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow border-0">
+            <div class="card-body p-5">
+                <div class="text-center mb-4">
+                    <i class="bi bi-pencil-square text-primary" style="font-size: 2.5rem;"></i>
+                    <h2 class="fw-bold mt-2">Create New Post</h2>
+                    <p class="text-muted">Share your thoughts with the world</p>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-triangle me-1"></i>
+                            Please fix the errors below.
+                        </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="id_title" class="form-label fw-semibold">Post Title</label>
+                        <input type="text" name="title" id="id_title" class="form-control form-control-lg" placeholder="Enter an engaging title..." value="{{ form.title.value|default:'' }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_content" class="form-label fw-semibold">Content</label>
+                        <textarea name="content" id="id_content" class="form-control" rows="10" placeholder="Write your blog post here..." required>{{ form.content.value|default:'' }}</textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="id_image" class="form-label fw-semibold">Featured Image</label>
+                        <input type="file" name="image" id="id_image" class="form-control" accept="image/*">
+                        <div class="form-text">Upload an image to display with your post (optional).</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary px-5 py-2 fw-semibold">
+                        <i class="bi bi-send me-1"></i>Publish Post
+                    </button>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary px-4 py-2 ms-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
